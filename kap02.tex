@@ -1,0 +1,277 @@
+\chapter{Základné pojmy}
+
+V tejto práci budeme predpokladať, že čitateľ pozná základné pojmy z matematickej štatistiky ako pravdepodobnostný a parametrický priestor, náhodný výber, 
+model, testová štatistika a kritický obor.
+V prvej kapitole zavedieme pojmy z matematickej štatistiky, ktoré pre nás budú kľúčové pri práci s mnohonásobným testovaním. 
+
+V celej kapitole budeme predpokladať, že máme náhodný výber $${\bf X} = (X_1, X_2, \dots, X_n)^T$$ zložený z náhodných veličín, 
+ktoré majú rozdelenie $F_X \in \mathcal{F}$, kde $\mathcal{F} = \{F(\theta),$ $\theta~\in~\Theta$ je neznámy parameter$\}$ je model. 
+Teda $\Theta$ je množina všetkých hodnôt parametru v modele $\mathcal{F}$. 
+Skutočný parameter budeme značiť $\theta_X$. 
+
+Označme $\Theta_0$ a $\Theta_1$ dve disjunktné podmnožiny parametrického priestoru $\Theta$. 
+Pri testovaní nás bude zaujímať konkrétna hodnota parametru $\theta_X$, avšak stačí zistiť, 
+či $\theta_X \in \Theta_0$ alebo $\theta_X \in \Theta_1$. 
+
+\begin{definicia}\label{def1}
+  Množinu $\Theta_0$ nazývame nulová hypotéza a $\Theta_1$ alternatívna hypotéza. 
+  Množinu všetkých rozdelení z modelu $\mathcal{F}$, ktorých parametre splňajú nulovú hypotézu, budeme značiť $\mathcal{F}_0$, 
+  podobne množinu rozdelení s parametrami spĺňajúcimi alternatívnu hypotézu značíme $\mathcal{F}_1$. 
+\end{definicia}  
+
+Pokiaľ chceme testovať, či je parameter $\theta_X$ rovný konkrétnej hodnote $\theta_0$, môžeme zvoliť nulovú hypotézu 
+$H_0: \theta_X = \theta_0$ a alternatívu $H_1: \theta \neq \theta_0$. Tento test budeme naývať obojstranný. 
+Ďalšou možnosťou je zvoliť nulovú hypotézu pomocou nerovnosti, teda $H_0: \theta_X \leq \theta_0$. Alternatívna hypotéza 
+potom bude mať tvar $H_1: \theta_X > \theta_0$. Rovnosti môžu byť v tomto prípade otočené, avšak krajný bod intervalu musí 
+byť vždy zahrnutý v nulovej hypotéze. Tento test sa nazýva jednostranný. 
+
+\begin{definicia}\label{def2}
+  Nech $\mathcal{S}({\bf X})$ je testová štatistika a $\mathcal{C}$ je kritický obor. Pomocou nich vieme definovať štatistický test. 
+  Ak $\mathcal{S}({\bf X}) \in \mathcal{C}$, zamietame nulovú hypotézu v prospech alternatívnej hypotézy.  
+  Ak $\mathcal{S}({\bf X}) \notin \mathcal{C}$, nemôžeme zamietnuť nulovú hypotézu v prospech alternatívnej hypotézy. 
+\end{definicia}
+
+Štatistický test nemusí v každom prípade rozhodnúť správne. 
+Preto nastávajú 4 rôzne situácie vzhľadom k platnosti nulovej hypotézy a vyhodnotenia testu, 
+ktoré môžeme prehľadne vidieť v~tabuľke \ref{tab01:1}. 
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|c|c|c|}
+    \hline
+     & Platí $H_0$ & Neplatí $H_0$ \\ \hline
+    Zamietame $H_0$ & Chyba 1.druhu & OK \\ \hline
+    Nezamietame $H_0$ & OK & Chyba 2.druhu \\ \hline
+  \end{tabular}
+  \caption{Všetky možnosti, ktoré nastávajú pri testovaní hypotéz}
+  \label{tab01:1}
+\end{table}
+
+V prípade zamietnutia platnej hypotézy hovoríme o chybe 1. druhu. 
+Nezamietnutie neplatnej hypotézy sa nazýva chyba 2. druhu. 
+Chyba 1. druhu je závažnejšia, preto budeme kontrolovať jej veľkosť a budeme chcieť, aby bola čo najmenšia.
+
+Na kontrolu chyby 1. druhu sa používa hladina testu. Niekedy budeme používať takisto výraz hladina významnosti. 
+
+\begin{definicia}\label{def3}
+  Nech $\alpha \in (0,1)$ je vopred dané číslo, nech máme test s testovou štatistikou $S({\bf X})$ a kritickým oborom $\mathcal{C}$. 
+  Hladina testu je rovná $\alpha$, ak je splnená podmienka $$ \sup_{F \in \mathcal{F}_0} P_F (S({\bf X}) \in \mathcal{C}) = \alpha, $$
+  kde $P_F$  označuje pravdepodobnosť za predpokladu rozdelenia F.  
+  V niektorých prípadoch je hladina testu dosiahnutá len asymptoticky, teda pre $n \longrightarrow \infty$ musí platiť upravená podmienka 
+  $$ \sup_{F \in \mathcal{F}_0} \lim_{n \rightarrow \infty} P_F (S({\bf X}) \in \mathcal{C}) = \alpha. $$
+\end{definicia}  
+
+Hladina testu je pravdepodobnosť, že zamietneme nulovú hypotézu, ktorá v skutočnosti platí. 
+Je to teda veľkosť chyby 1. druhu. 
+Pri testovaní vždy na začiatku určíme na akej hladine významnosti budeme dané hypotézy testovať. 
+V tejto práci budeme väčšinou voliť hladinu testu $\alpha=0.05$. 
+
+Funkciu $\beta_n(F) = P_F (S({\bf X}) \in \mathcal{C})$, kde $F \in \mathcal{F}$, nazývame silofunkcia testu. 
+V prípade, že $F \in \mathcal{F}_1$, číslo $\beta_n(F)$ nazývame sila testu a je to pravdepodobnosť zamietnutia neplatnej hypotézy. 
+Pri testovaní chceme, aby sila testu bola čo najvyššia. Platí, že chyba 2. druhu je rovná $1-\beta_n(F)$. 
+
+Pri testovaní hypotéz nebudeme vždy postupovať ako sme opísali v predchádzajúcej časti kapitoly. 
+Hypotézy vieme otestovať aj pomocou p-hodnoty, ktorú teraz definujeme. 
+
+\begin{definicia}\label{def4}
+  Nech $\mathcal{S}(\bf{X})$ je testová štatistika, $\mathcal{C}$ je kritický obor a nech $s$ je hodnota testovej štatistiky $\mathcal{S}(\bf{X})$ 
+  spočítaná z napozorovaných dát, ktoré chceme testovať. 
+  P-hodnotu definujeme ako 
+  \begin{itemize} 
+    \item $ p = sup_{F \in \mathcal{F}_0} P_F (S({\bf X}) \leq s) $, 
+    ak $\mathcal{C} = \langle c_U, \infty)$ pre nejaké $c_U \in \R$,
+    \item $ p = sup_{F \in \mathcal{F}_0} P_F (S({\bf X}) \geq s) $, 
+    ak $\mathcal{C} = (-\infty, c_L \rangle$ pre nejaké $c_L \in \R$,
+    \item $ p = 2 \min \{P_F (\mathcal{S}({\bf X}) \leq s), P_F (\mathcal{S}({\bf X}) \geq s)\} $, 
+    ak $\mathcal{C} = (-\infty, c_L \rangle \cup \langle c_U, \infty)$  
+    pre nejaké $c_L, c_U \in \R$, $c_L < c_U$ a zároveň je splnená podmienka 
+    \newline $ \sup_{F \in \mathcal{F}_0} P_F (\mathcal{S}({\bf X}) \leq c_L) 
+    = \sup_{F \in \mathcal{F}_0} P_F (\mathcal{S}({\bf X}) \geq c_U) = \frac{\alpha}{2}. $
+  \end{itemize}
+\end{definicia}  
+
+P-hodnota sa niekedy nazýva dosiahnutá hladina testu. 
+Podmienka na konci definície musí byť splnená, aby celková hladina testu bola rovná $\alpha$. 
+
+Ako sme zmienili vyššie, pomocou p-hodnoty vieme rozhodnúť, či máme hypotézu zamietnuť alebo nie. 
+Budeme k tomu potrebovať nasledujúce tvrdenie, ktorého dôkaz viď \cite[Omelka, Tvrdenie 4.1]{Omelka18}. 
+
+\begin{tvrd}\label{tvrd01}
+  Nech $\mathcal{S}({\bf X})$ je testová štatistika so spojitým rozdelením. 
+  Uvažujme test hypotézy $H_0$ proti alternatíve $H_1$ daný pravidlom 
+  \begin{center}
+    $H_0$ zamietame $\Longleftrightarrow$ $p \leq \alpha$, \\
+    $H_0$ nezamietame $\Longleftrightarrow$ $p > \alpha$.\\
+  \end{center}  
+  Potom má tento test hladinu $\alpha$. 
+\end{tvrd}  
+
+%\chapter{Mnohonásobné testovanie}
+
+V tejto kapitole budeme vysvetľovať ako funguje mnohonásobné testovanie, aké problémy nastávajú pri jeho používaní 
+a definujeme chyby, ktoré budeme kontrolovať. 
+V poslednej podkapitole ukážeme problém s hladinou testu pomocou obrázkov. 
+
+\section{Úvod}
+
+V tejto podkapitole budeme predpokladať, že máme $K$ hypotéz, ktoré chceme testovať, 
+nulové hypotézy budeme značiť $H^{(i)}_0$, alternatívy $H^{(i)}_1$ 
+s testovou štatistikou $S^{(i)}$ a kritickým oborom $C^{(i)}$, $i \in \{1, \dots, K\}$. 
+Všetky nulové hypotézy budeme testovať simultánne a nezávisle na sebe, 
+tento typ testovania sa nazýva mnohonásobné testovanie. 
+
+Ako sme spomínali v prvej kapitole, pri testovaní hypotéz je potrebné kontrolovať hladinu testu, ktorú určíme na začiatku. 
+Pre mnohonásobné testovanie zvolíme hladinu testu $\alpha$ a každý test $T^{(i)}$ budeme testovať na tejto hladine. 
+To znamená, že pravdepodobnosť zamietnutia platnej nulovej hypotézy v teste $T^{(i)}$ bude rovná $\alpha$ pre každé $i \in \{1, \dots, K\}$.
+$$ P_{H^{(i)}_0} (S^{(i)} \in C^{(i)}) = \alpha $$ 
+Takisto vieme vyjadriť pravdepodobnosť nezamietnutia platnej hypotézy, teda pravdepodobnosť, že nespravíme chybu 1.druhu. 
+$$ P_{H^{(i)}_0} (S^{(i)} \notin C^{(i)}) = 1 - \alpha $$ 
+Pravdepodobnosť všetkých zamietnutí platných hypotéz je pravdepodobnosť zjednotenia všetkých zamietnutí hypotéz 
+za predpokladu platnosti všetkých nulových hypotéz. 
+Túto pravdepodobnosť budeme označovať $\alpha_K$ a formálne to môžeme zapísať nasledovným spôsobom. 
+Skutočnosť, že všetky nulové hypotézy sú platné, budeme značiť $ \mathcal{H}_0 = {\bigcap_{i=1}^{K} H^{(i)}_0} $.
+$$ P_{\mathcal{H}_0} ( \bigcup_{i=1}^{K} [S^{(i)} \in C^{(i)}] ) = \alpha_K $$ 
+Je zrejmé, že $\alpha_K$ je väčšie ako $\alpha$, ktoré sme zvolili na začiatku. 
+Túto skutočnosť neskôr ukážeme pomocou obrázkov. 
+
+\section{Chyby}
+
+Problém mnohonásobného testovania sa dá ukázať aj iným spôsobom. 
+Podobne ako sme opísali v predchádzajúcej podkapitole, môžeme vyjadriť pravdepodobnosť, 
+že nespravíme chybu 1. druhu ani pri jednom testovaní hypotézy $H^i$, kde $i \in \{1, \dots, K\}$. 
+$$ P_{\mathcal{H}_0} ( \bigcup_{i=1}^{K} [S^{(i)} \notin C^{(i)}] ) = (1 - \alpha)^K $$
+Pravdepodobnosť zamietnutia aspoň jednej platnej hypotézy zapíšeme nasledujúcim spôsobom. 
+$$ P_{\mathcal{H}_0} ( \exists i \in \{1, \dots, K\}: [S^{(i)} \in C^{(i)}] ) 
+   = 1 - P_{\mathcal{H}_0} ( \bigcup_{i=1}^{K} [S^{(i)} \notin C^{(i)}] ) = 1 - (1 - \alpha)^K $$    
+
+\begin{definicia}\label{def5} 
+  Predpokladajme, že máme $K$ testov, kde $S^{(i)}$ sú ich testové štatistiky a $C^{(i)}$ kritické obory, $i \in \{1, \dots, K\}$. 
+  Pravdepodobnosť zamietnutia aspoň jednej platnej hypotézy sa nazýva familywise error rate, 
+  budeme ju značiť ${\rm FWER}$. Teda platí 
+  $$ {\rm FWER} = P_{\mathcal{H}_0} ( \exists i \in \{1, \dots, K\}: [S^{(i)} \in C^{(i)}] ). $$
+\end{definicia}
+
+Pri mnohonásobnom testovaní budeme kontrolovať hlavne familywise error rate a budeme chcieť, 
+aby táto chyba bola čo najmenšia. 
+
+Problém s mnohonásobným testovaním ukážeme na príklade s konkrétnymi číslami. 
+Nech $\alpha = 0.05$, počet hypotéz $K = 10$. Jednotlivé hypotézy budeme testovať na hladine $\alpha$. 
+Pravdepodobnosť, že spravíme minimálne jednu chybu pri mnohonásobnom testovaní, 
+bude ${\rm FWER} = 1 - (1 - 0.05)^{10} = 0.4012631$. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{C:/Users/KIKA/Desktop/BP/R/obr1.pdf}
+  \caption{Familywise error rate pri rôznych počtoch hypotéz s rôznymi hodnotami $\alpha$, 
+  če}
+  \label{obr02:1}
+\end{figure}
+
+Na Obrázku \ref{obr02:1} vidíme veľkosť chyby ${\rm FWER}$ podľa počtu hypotéz, 
+ktoré testujeme mnohonásobným testovaním s hladinou významnosti $\alpha = 0.05$. 
+Pravdepodobnosť, že spravíme aspoň jednu chybu je vyššia ako $0.5$ už pri testovaní $15$ hypotéz. 
+
+Aby bola táto chyba menšia alebo rovná ako $\alpha$, ktoré sme zvolili na začiatku, 
+je nutné testovať jednotlivé hypotézy s menšou hladinou významnosti. 
+
+V Tabuľke \ref{tab02:1} môžeme vidieť všetky možnosti, ktoré môžu nastať pri mnohonásobnom testovaní, 
+pričom $D$, $E$, $F$, $G$ označujú počty hypotéz $H^{(i)}_0$ v každej možnosti pre $i \in \{1, \dots, K\}$, kde $K$ je ich súčet. 
+$K_0$ označuje počet platných hypotéz a $Z$ počet zamietnutých hypotéz. 
+Nás bude najviac zaujímať veľkosť $D$, pretože je to počet zamietnutých platných hypotéz. 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+       & Platné $H^{(i)}_0$ & Neplatné $H^{(i)}_0$ & Celkom \\ \hline
+      Zamietnuté $H^{(i)}_0$ & $D$ & $E$ & $Z$ \\ \hline
+      Nezamietnuté $H^{(i)}_0$ & $F$ & $G$ & $K$-$Z$ \\ \hline
+      Celkom & $K_0$ & $K$-$K_0$ & $K$ \\ \hline
+    \end{tabular}
+    \caption{Počet hypotéz v každej možnosti, ktorá nastáva}
+    \label{tab02:1}
+\end{table}
+
+Familywise error rate sa dá zapísať aj pomocou tohto značenia, platí 
+${\rm FWER} = P (D \geq 1)$. 
+Pri niektorých metódach sa často kontroluje chyba, ktorá nie je taká striktná ako ${\rm FWER}$. 
+
+\begin{definicia}\label{def6}
+  False discovery rate definujeme ako strednú hodnotu z podielu zamietnutých platných hypotéz k zamietnutým hypotézam  
+  za predpokladu zamietnutia aspoň jednej hypotézy. Budeme ju značiť ${\rm FDR}$. 
+  Platí 
+  $$ {\rm FDR} = E \left( \frac{D}{Z} \Big| Z>0 \right) P(Z>0). $$
+\end{definicia}
+
+Ak sú všetky nulové hypotézy pravdivé, ${\rm FWER}$ a ${\rm FDR}$ sa rovnajú \cite{Benjamini&Hochberg95}. 
+V opačnom prípade platí ${\rm FDR} \leq {\rm FWER}$. 
+Teda pokiaľ kontrolujeme familywise error rate, kontrolujeme zároveň aj false discovery rate. 
+
+Chyba ${\rm FWER}$ sa dá kontrolovať dvomi rôznymi spôsobmi, 
+pri prvom predpokladáme platnosť všetkých nulových hypotéz, ktoré testujeme, 
+ako sme uviedli v definícii \ref{def5}. 
+Nazýva sa to slabá kontrola chyby ${\rm FWER}$. 
+V tomto prípade máme zaručenú ${\rm FWER}$ na hladine $\alpha$ len za platnosti všetkých hypotéz, 
+teda väčšinou nie je vhodné ich využívať. 
+
+Označme $\mathcal{H} = \{ H_0^{(1)}, \dots, H_0^{(K)} \}$ množinu všetkých hypotéz, ktoré chceme testovať. 
+Nech $\mathcal{H}'$ je podmnožina $\mathcal{H}$. 
+Skutočnosť, že platia všetky hypotézy v $\mathcal{H}$, respektíve v $\mathcal{H}'$, 
+označíme ${\mathcal{H}}_0$, respektíve ${\mathcal{H}}'_0$. 
+Silná kontrola chyby ${\rm FWER}$ sa dá zapísať ako 
+$$ P_{{\mathcal{H}}'_0} \left( \exists H_0^{(i)} \in {\mathcal{H}}'_0: [S^{(i)} \in C^{(i)}] \right) \leq \alpha, $$
+pre každú $\mathcal{H}' \subseteq \mathcal{H}$. 
+Je to pravdepodobnosť zamietnutia aspoň jednej platnej hypotézy za predpokladu, 
+že je platná ktorákoľvek podmnožina hypotéz. 
+
+\section{Problém mnohonásobného testovania}
+
+V tejto podkapitole ukážeme problém mnohonásobného testovania pomocou obrázkov. 
+Na začiatku ukážeme aká je skutočná hladina významnosti v prípade testovanie jednej hypotézy. 
+Hypotézy budeme testovať na hladine $\alpha = 0.05$. 
+
+V celej podkapitole budeme predpokladať, že máme náhodný výber
+${\bf X} = (X_1, X_2, \dots, X_n)^T$ z rozdelenia $N(\mu, \sigma^2)$, 
+teda budeme pracovať s modelom $\mathcal{F} = \{ N(\mu, \sigma^2),~\mu \in \R,~\sigma^2>0 \}$. 
+
+Najskôr budeme testovať hypotézu $H_0$ proti alternatíve $H_1$, ktoré budú tvaru 
+$$ H_0: \mu = 0,~H_1: \mu \neq 0. $$
+Jednovýberovým testom budeme testovať vygenerované dáta z normovaného normálneho rozdelenia. 
+Rozsah dát bude $100$. 
+
+Tento postup budeme opakovať niekoľko krát po sebe, pričom počet testovaní budeme meniť, 
+postupne $20, 200, 2000, 20000$. 
+Potrebujeme zistiť počet zamietnutých platných hypotéz. 
+Dáta sme vygenerovali so strednou hodnotou rovnou $0$, 
+všetky hypotézy sú platné a podiel zamietnutých hypotéz k počtu testovaní bude rovný skutočnej hladine testu. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{C:/Users/KIKA/Desktop/BP/R/obr2.pdf}
+  \caption{Hladina jednovýberového testu pre rôzne počty opakovaní}
+  \label{obr02:2}
+\end{figure}
+
+Na Obrázku \ref{obr02:2} sa skutočná hladina testu pohybuje v blízkosti zvolenej hladiny $\alpha = 0.05$.             
+
+V tomto prípade budeme zároveň testovať dve hypotézy, jedna bude testovať strednú hodnotu a druhá rozptyl náhodného výberu 
+a budú tvaru
+$$ H_0^{(1)}: \mu = 0,~H_1^{(1)}: \mu \neq 0, $$
+$$ H_0^{(2)}: \sigma^2 = 1,~H_1^{(2)}: \sigma^2 \neq 1. $$ 
+
+Každú nulovú hypotézu otestujeme použitím jednovýberového testu. 
+Mnohonásobné testovanie zopakujeme niekoľko krát po sebe, počet testovaní budeme meniť, 
+postupne $20, 200, 2000, 20000$. 
+Dáta s rozsahom $100$ boli vygenerované so strednou hodnotou rovnou $0$ a smerodajnou odchýlkou rovnou $1$,  
+teda všetky náhodné výbery majú rovnakú strednú hodnotu a rozptyl, hypotézy sú platné. 
+Podiel zamietnutých hypotéz k počtu testovaní je skutočná hladina testu. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{C:/Users/KIKA/Desktop/BP/R/obr3.pdf}
+  \caption{Hladina mnohonásobného testovania po $1000$ opakovaniach pre rôzne počty pozorovaní}
+  \label{obr02:3}
+\end{figure}
+
+Na Obrázku \ref{obr02:3} je skutočná hladina testu skoro dvojnásobne vyššia 
+ako pôvodne zvolená hladina $\alpha = 0.05$. 

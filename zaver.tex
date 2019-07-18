@@ -1,0 +1,46 @@
+\chapter*{Záver}
+\addcontentsline{toc}{chapter}{Záver}
+
+Táto práca sa~zaoberala problémom s~hladinou testu pri~mnohonásobnom testovaní. 
+Na~začiatku práce sme definovali kľúčové pojmy z~matematickej štatistiky, 
+ako~p-hodnota, hladina a~sila testu. 
+
+Podrobne sme objasnili problém s~hladinou testu nastávajúci pri~mnohonásobnom testovaní. 
+Pomocou obrázkov sme ukázali rozdiely medzi testovaním jednej a~viacerých hypotéz. 
+Definovali sme chyby ${\rm FWER}$ a~${\rm FDR}$, ktoré sa kontrolujú pri~testovaní 
+a~opísali sme aký je medzi~nimi rozdiel. 
+
+Táto práca sa zaoberala porovnávaním rozličných korekcií mnohonásobného testovania, 
+vysvetlili sme ako fungujú vybrané korekcie. 
+Pred~definovaním korekcií sme uviedli Booleovu nerovnosť, ktorá je základným tvrdením 
+pre~Bonferroniho korekciu a~taktiež niektoré ďalšie odvíjajúce sa z~nej. 
+Najskôr sme opísali simultánne zamietajúce korekcie, Bonferroniho a~Šidákovu. 
+Porovnali sme upravenú hladinu testov pre~tieto dve~korekcie. 
+Ostatné opísané korekcie patria medzi postupne zamietajúce. 
+Definovali sme Holmovu a~Simesovu korekciu, z~ktorých bola odvodená Hochbergova korekcia. 
+Ako poslednú korekciu sme uviedli Benjamini-Hochbergovu odlíšujúcu sa od~ostatných 
+kontrolou chyby ${\rm FDR}$ narozdiel od~kontroly ${\rm FWER}$. 
+Pre každú korekciu sme uviedli základné predpoklady na~jej definíciu 
+a~opísali sme postup zamietania hypotéz. 
+Pri väčšine z~nich sme uviedli dôkaz, že korekcie naozaj kontrolujú dané chyby. 
+
+V~praktickej časti práce sme porovnali korekcie najskôr z~hľadiska hladiny testu. 
+Pomocou simulácii sme určili počet zamietnutých platných hypotéz na~určitý počet opakovaní 
+pre~testovanie rôzneho počtu hypotéz. 
+Následné sme pomocou týchto hodnôt zistili celkovú hladinu testu pre každú korekciu.
+Podľa~výsledkov simulácii sme porovnali korekcie a~vysvetlili v~čom sa odlišujú. 
+Ďalšie hľadisko porovnávania bola sila testu. 
+Keďže sila testu závisí od~rôznych faktorov, v~simuláciach sme menili podmienky pre~testovanie, 
+konkrétne pomer neplatných a~platných hypotéz a~strednú hodnotu vygenerovaných dát neplatných hypotéz. 
+Simulácie sme previedli pre~rôzne počty testujúcich hypotéz. 
+V~niektorých prípadoch sme nepostrehli rozdiely v~korekciách, 
+avšak pri~väčšom počte neplatných hypotéz bola sila testu Benjamini-Hochbergovej korekcie výrazne vyššia 
+ako sila testu pri~použítí iných korekcií. 
+Je~to~práve z~dôvodu kontroly chyby ${\rm FDR}$, ktorá nie je až~striktná ako~kontrola ${\rm FWER}$. 
+Na konci praktickej časti sme pomocou simulácii ukázali silu testu pre testovanie troch hypotéz 
+s rôznymi rozsahmi náhodného výberu. 
+Uvažovali sme rôzne možnosti platných a neplatných hypotéz a takisto sme menili parametre rozdelení náhodných výberov, 
+pre ktoré hypotézy nie sú platné. 
+Touto simuláciou sme ukázali, že sila testu sa v každom prípade zvyšuje pre rastúci rozsah náhodných výberov. 
+To znamená, že korekcie nemajú vplyv na konzistenciu testu. 
+ 

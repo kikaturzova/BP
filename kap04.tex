@@ -1,0 +1,239 @@
+\chapter{Porovnanie korekcií}
+
+V~tejto kapitole porovnáme korekcie, ktoré sme opísali v~predchádzajúcej kapitole. 
+Korekcie porovnáme z~dvoch rôznych hladísk. 
+V~prvej podkapitole sa~budeme pozerať na~hladinu významnosti jednotlivých korekcií. 
+Neskôr porovnáme korekcie vzhľadom k~ich~sile. 
+Na konci kapitoly ukážeme, že korekcie nemajú vplyv na konzistenciu testu. 
+
+\section{Z~hľadiska hladiny testu}
+
+Predpokladajme, že máme $K$~náhodných výberov s rozsahom $n=100$. 
+\begin{center} 
+    $ {\bf X}_1 = (X_{11}, X_{12}, \dots, X_{1n}) $ \\
+    $ {\bf X}_2 = (X_{21}, X_{22}, \dots, X_{1n}) $ \\
+    $\vdots$ \\
+    $ {\bf X}_K = (X_{K1}, X_{K2}, \dots, X_{Kn}) $ \\
+\end{center}
+Strednú hodnotu náhodného výberu ${\bf X}_i$ označíme $\mu_i$, $i \in \{ 1, \dots, K\}$. 
+Budeme testovať $K$~hypotéz v~rovnakom čase, ktoré budú tvaru 
+\begin{center} 
+$ H_1: \mu_1 = 0, $ \\
+$ \vdots $ \\
+$ H_K: \mu_K = 0. $ \\
+\end{center}
+Aby sme zistili hladinu významnosti mnohonásobného testovania, 
+dáta vygenerujeme z~normovaného normálneho rozdelenia. 
+Teda všetky hypotézy sú platné. 
+Mnohonásobné testovanie prevedieme opakovane $100000$-krát na rôzne vygenerovaných dátach, 
+pričom chceme, aby bola dodržaná hladina významnosti $\alpha=0.05$. 
+Pri každom opakovaní budeme zisťovať koľko hypotéz bolo zamietnutých, 
+pričom počet hypotéz budeme meniť. 
+Následne spočítame koľkokrát z $100000$ opakovaní sme zamietli určité počty hypotéz. 
+V práci uvedieme podiel tohto počtu opakovaní k všetkým opakovaniam. 
+V~prvom prípade budeme testovať $3$~hypotézy. 
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c|r@{.}lr@{.}lr@{.}lr@{.}lr@{.}lr@{.}lr@{.}l}
+     & \multicolumn{2}{c}{\bf BONF} & \multicolumn{2}{c}{\bf ŠIDÁK} & \multicolumn{2}{c}{\bf HOLM} & \multicolumn{2}{c}{\bf SIMES} 
+     & \multicolumn{2}{c}{\bf HOCH} & \multicolumn{2}{c}{\bf BH} & \multicolumn{2}{c}{\bf -} \\ \hline
+    {\bf 1} & 0&0475 & 0&0483 & 0&0468 & 0&0000 & 0&0469 & 0&0458 & 0&1360 \\ 
+    {\bf 2} & 0&0009 & 0&0009 & 0&0017 & 0&0000 & 0&0015 & 0&0034 & 0&0073 \\ 
+    {\bf 3} & 0&0000 & 0&0000 & 0&0001 & 0&0493 & 0&0000 & 0&0001 & 0&0001 \\ \hline
+    {\bf $\sum$} & 0&0484 & 0&0492 & 0&0486 & 0&0493 & 0&0484 & 0&0493 & 0&1434 \\ 
+  \end{tabular}
+  \caption{Podiel počtu zamietnutých hypotéz v~každom opakovaní k počtu opakovaní, 
+  pri~testovaní $3$~hypotéz rôznymi korekciami s~počtom opakovaní $100000$}
+  \captionsetup{justification=centering}
+  \label{tab04:1}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c|r@{.}lr@{.}lr@{.}lr@{.}lr@{.}lr@{.}lr@{.}l}
+    & \multicolumn{2}{c}{\bf BONF} & \multicolumn{2}{c}{\bf ŠIDÁK} & \multicolumn{2}{c}{\bf HOLM} & \multicolumn{2}{c}{\bf SIMES} 
+    & \multicolumn{2}{c}{\bf HOCH} & \multicolumn{2}{c}{\bf BH} & \multicolumn{2}{c}{\bf -} \\ \hline
+    {\bf 1} & 0&0476 & 0&0485 & 0&0472 & 0&0000 & 0&0472 & 0&0457 & 0&2051 \\ 
+    {\bf 2} & 0&0009 & 0&0010 & 0&0014 & 0&0000 & 0&0013 & 0&0038 & 0&0213 \\ 
+    {\bf 3} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0002 & 0&0012 \\ 
+    {\bf 4} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 \\ 
+    {\bf 5} & 0&0000 & 0&0000 & 0&0000 & 0&0497 & 0&0000 & 0&0000 & 0&0000 \\ \hline
+    {\bf $\sum$} & 0&0485 & 0&0495 & 0&0486 & 0&0497 & 0&0485 & 0&0497 & 0&2276 \\ 
+  \end{tabular}
+  \caption{Podiel počtu zamietnutých hypotéz v~každom opakovaní k počtu opakovaní, 
+  pri~testovaní $5$~hypotéz rôznymi korekciami s~počtom opakovaní $100000$}
+  \captionsetup{justification=centering}
+  \label{tab04:2}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c|r@{.}lr@{.}lr@{.}lr@{.}lr@{.}lr@{.}lr@{.}l}
+    & \multicolumn{2}{c}{\bf BONF} & \multicolumn{2}{c}{\bf ŠIDÁK} & \multicolumn{2}{c}{\bf HOLM} & \multicolumn{2}{c}{\bf SIMES} 
+    & \multicolumn{2}{c}{\bf HOCH} & \multicolumn{2}{c}{\bf BH} & \multicolumn{2}{c}{\bf -} \\ \hline
+    {\bf 1} & 0&0478 & 0&0486 & 0&0475 & 0&0000 & 0&0475 & 0&0458 & 0&3140 \\ 
+    {\bf 2} & 0&0008 & 0&0009 & 0&0011 & 0&0000 & 0&0011 & 0&0306 & 0&0749 \\ 
+    {\bf 3} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0031 & 0&0103 \\ 
+    {\bf 4} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0010 \\ 
+    {\bf 5} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 \\ 
+    {\bf 6} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 \\ 
+    {\bf 7} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 \\ 
+    {\bf 8} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 \\ 
+    {\bf 9} & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 & 0&0000 \\ 
+    {\bf 10} & 0&0000 & 0&0000 & 0&0000 & 0&0497 & 0&0000 & 0&0000 & 0&0000 \\ \hline
+    {\bf $\sum$} & 0&0486 & 0&0495 & 0&0486 & 0&0497 & 0&0486 & 0&0497 & 0&4002 \\ 
+  \end{tabular}
+  \caption{Podiel počtu zamietnutých hypotéz v~každom opakovaní k počtu opakovaní, 
+  pri~testovaní $10$~hypotéz rôznymi korekciami s~počtom opakovaní $100000$}
+  \captionsetup{justification=centering}
+  \label{tab04:3}
+\end{table}
+
+V~Tabuľkách~\ref{tab04:1}, \ref{tab04:2}, \ref{tab04:3} vidíme podiel 
+počtu  zamietnutých hypotéz v~každom opakovaní k počtu opakovaní 
+pri~testovaní $3$, $5$, $10$~hypotéz.  
+V~poslednom riadku je podiel počtu chýb, ktoré sme spravili pri~$100000$~opakovaniach 
+k počtu všetkých opakovaní.  
+Tým sme získali celkovú hladinu významnosti jednotlivých korekcií. 
+Vidíme, že~každá korekcia dodržuje hladinu významnosti $\alpha=0.05$. 
+Simesova korekcia kontroluje len~slabšiu verziu chyby ${\rm FWER}$, 
+teda pri~platnosti všetkých hypotéz je~dodržaná hladina testu. 
+Podľa hodnôt v~tabuľkách sa dá spozorovať, že~táto korekcia funguje iným spôsobom ako ostatné. 
+Za~splnenia určitých podmienok zamieta všetky hypotézy, v~opačnom prípade nezamietne žiadnu. 
+Benjamini-Hochbergova korekcia kontroluje chybu ${\rm FDR}$, ktorá nie~je až~taká striktná. 
+V~porovnaní s~inými korekciami zamieta častejšie väčší počet hypotéz ako $1$-$2$. 
+Ostatné korekcie kontrolujú silnejšiu verziu chyby ${\rm FWER}$, 
+skutočná hladina týchto korekcií je~nižšia ako hladina Simesovej alebo Benjamini-Hochbergovej korekcie. 
+Teda ich~sila by mala byť nižšia. 
+Holmova a~Hochbergova korekcia majú podobné výsledky vzhľadom k~testovaniu každého počtu hypotéz, ktoré sme uviedli. 
+Takisto si môžeme všimnúť, že počet chýb pri~použití Simesovej a~Benjamini-Hochbergovej korekcie je~rovnaký. 
+
+\section{Z hľadiska sily testu}
+
+V~tejto podkapitole budeme porovnávať silu korekcií za~rôznych podmienok. 
+Sila testu závisí na~zvolenej alternatíve, na~počte nulových hypotéz 
+a~v~našom prípade aj na~počte hypotéz, ktoré testujeme. 
+Aby sme zistili silu testov, musíme vygenerovať dáta tak, aby neboli všetky nulové hypotézy platné. 
+Z~tohto porovnania vylúčime Simesovu korekciu, 
+ktorá kontroluje chybu ${\rm FWER}$ len v~slabšom zmysle, 
+teda nie~je zaručená hladina významnosti $\alpha=0.05$. 
+
+Rozoberieme viacero možností, budeme meniť pomer platných a~neplatných hypotéz, 
+pričom neplatné hypotézy budeme generovať s~rôznymi strednými hodnotami. 
+Silu testov porovnáme pre rôzne počty hypotéz, ktoré budeme testovať. 
+
+Budeme predpokladať, že máme $K$ nezávislých náhodných výberov 
+so~strednými hodnotami $\mu_i$ s~rozsahom $n=100$, kde $i \in \{ 1, \dots, K \}$. 
+Dáta vygenerujeme z~normovaného normálneho rozdelenia. 
+Budeme uvažovať niekoľko prípadov. 
+Počet náhodných výberov $K$~bude postupne $4$, $8$, $16$, $32$, $64$, 
+pričom budeme testovať $K$~hypotéz. 
+Pomer neplatných hypotéz ku~všetkým hypotézam budeme meniť,  
+rozdelíme ich na~4~rôzne prípady, 
+počet nepatných hypotéz bude postupne ${K}$, $\frac{3}{4}K$, $\frac{1}{2}K$, $\frac{1}{4}K$. 
+Ako sme spomenuli, sila testu často závisí na~rozdiele nulovej hypotézy a~testovaných dát. 
+Preto budeme uvažovať $3$ možnosti vo~voľbe stredných hodnôt neplatných hypotéz. 
+
+Budeme testovať strednú hodnotu náhodných výberov, 
+testujeme $K$~hypotéz tvaru 
+\begin{center} 
+  $ H_1: \mu_1 = 0, $ \\
+  $ \vdots $ \\
+  $ H_K: \mu_K = 0. $ \\
+\end{center}
+Platné hypotézy vygenerujeme so~strednou hodnotou rovnou~$0$. 
+Neplatné hypotézy budeme generovať postupne so~strednými hodnotami rovnými $0.1$, $0.2$, $0.3$. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{C:/Users/KIKA/Desktop/BP/R/obr3.pdf}
+  \caption{Sila testovania pri~použití rôznych korekcií 
+  so~strednými hodnotami neplatných hypotéz $0.1$, $0.2$, $0.3$ 
+  a~podielom neplatných hypotéz ${1}$, $\frac{3}{4}$, $\frac{1}{2}$, $\frac{1}{4}$}
+  \captionsetup{justification=centering}
+  \label{obr04:1}
+\end{figure}
+
+Na~Obrázku~\ref{obr04:1} vidíme silu mnohonásobného testovanie s~použitím rozličných korekcií. 
+Na~horizontálnej osy je počet hypotéz, ktoré sme testovali. 
+Nad~obrázkami je stredná hodnota generovaných dát s~neplatnými hypotézami, 
+napravo vidíme pomer neplatných hypotéz ku~všetkým hypotézam. 
+
+Pre~neplatné hypotézy s~akoukoľvek strednou hodnotou platí
+čím menší je počet neplatných hypotéz, tým väčšia je sila testu. 
+Pri voľbe neplatnej hypotézy so~strednou hodnotou, ktorá je blízko strednej hodnoty z~nulovej hypotézy, 
+je sila testu výrazne nižšia ako pri~iných stredných hodnotách. 
+Je~to z~dôvodu, že test nevie vždy správne vyhodnotiť, či daná hypotéza platí, 
+keďže sú dané stredné hodnoty blízko seba. 
+
+Pri~voľbe strednej hodnoty $0.1$ pre~neplatné hypotézy nie~je medzi korekciami vidieť žiadny rozdiel 
+pre~všetky zvolené pomery hypotéz. 
+Pre~ostatné zvolené stredné hodnoty sú rozdiely vidieteľnejšie pri~vyššom počte neplatných hypotéz. 
+Bonferroniho a~Šidákova majú veľmi podobnú silu testu vo~všetkých prípadoch. 
+Holmova korekcia sa vo~väčšine prípadoch správa podobne ako Hochbergova, 
+avšak v~prípade neplatnosti všetkých hypotéz má pri~nižsom počte hypotéz väčšiu silu. 
+Najvyššiu silu vo~všetkých prípadoch má Benjamini-Hochbergova korekcia. 
+Pri~zvyšujúcom počte neplatných hypotéz je sila tejto korekcie výrazne vyššia ako sily iných korekcií. 
+Je~to kvôli kontrolovaniu chyby ${\rm FDR}$, ktorá nie~je až~taká striktná ako~${\rm FWER}$, 
+ktorú kontrolujú všetky ostatné korekcie.
+
+Na silu testu sa môžeme pozerať aj iným spôsobom. 
+V predchádzajúcej podkapitole sme pomocou simulácii ukázali, že korekcie korigujú celkovú hladinu testovania. 
+V tomto prípade by sme chceli overiť, že korekcie mnohonásobného testovanie nemajú vplyv na konzistenciu testu, 
+teda chceme, aby sila testu konvergovala k $1$ pre rastúci rozsah náhodných výberov. 
+
+Predpokladajme, že máme dva náhodné výbery 
+$$ {\bf X}_1 = (X_{11}, X_{12}, \dots, X_{1n})^T, $$ 
+$$ {\bf X}_2 = (X_{21}, X_{22}, \dots, X_{2n})^T, $$
+z~rozdelení $N(\mu_1, \sigma^2_1)$ a~$N(\mu_2, \sigma^2_2)$. 
+Aby sme ukázali konzistenciu, budeme meniť rozsah náhodných výberov $n$, 
+postupne $50$, $100$, $150$, $200$, $250$. 
+Budeme testovať tri hypotézy, ktoré budú mať tvar 
+\begin{align*}
+  H_1 & : \mu_1 = 0; \\
+  H_2 & : \mu_2 = 0; \\ 
+  H_3 & : \sigma^2_1 = \sigma^2_2. \\
+\end{align*}
+Na~zistenie sily testu, potrebujeme vygenerovať dáta, pre ktoré nebudú všetky hypotézy platné. 
+Náhodné výbery, pre~ktoré budú platiť všetky hypotézy, budeme generovať z normovaného normálneho rozdelenia. 
+V~tomto prípade uvedieme tri možnosti pre náhodné výbery, kde $a, b \in \R$ budú nami zvolené parametre:  
+\begin{enumerate}
+  \item ${\bf X}_1 \sim N(0,1)$ a ${\bf X}_2 \sim N(0,b)$, 
+  v tejto možnosti budú hypotézy $H_1$, $H_2$ platné a  $H_3$ neplatná; 
+  \item ${\bf X}_1 \sim N(0,1)$ a ${\bf X}_2 \sim N(a,b)$,
+  hypotéza $H_1$ je platné, hypotézy $H_2$, $H_3$ sú neplatné; 
+  \item ${\bf X}_1 \sim N(a,1)$ a ${\bf X}_2 \sim N(a,b)$,  
+  v tomto prípade sú všetky hypotézy neplatné.  
+\end{enumerate}
+Poradie možností budeme používať v grafe.  
+Keďže veľkosť sily závisí od zvolenej alternatívy, parametre $a$, $b$ budeme postupne meniť, 
+uvedieme tri možnosti voľby týchto parametrov: 
+\begin{itemize}
+  \item $a=0.1$, $b=1.25$;
+  \item $a=0.2$, $b=1.5$;
+  \item $a=0.3$, $b=1.75$.
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{C:/Users/KIKA/Desktop/BP/R/obr4_portrait.pdf}
+  \caption{Sila testovania pri~použití rôznych korekcií 
+  s troma možnosťami voľby platných a neplatných hypotéz, 
+  pre rôzne parametre rozdelení $a$, $b$}
+  \captionsetup{justification=centering}
+  \label{obr04:2}
+\end{figure}
+
+Na Obrázku \ref{obr04:2} je na horizontálnej osi uvedený rozsah náhodných výberov, 
+na vertikálnej osi sila testu. 
+Nad obrázkami vidíme zvolené parametre a napravo poradie možnosti ohľadne voľby generovaných náhodných výberov, 
+ako sme uviedli vyššie.  
+Vidíme, že pre každú voľbu parametrov $a$, $b$ 
+a taktiež pre každú uvedenú možnosť voľby platných a neplatných hypotéz, 
+sa sila testu zvyšuje s rastúcim rozsahom náhodného výberu. 
+Pomocou Obrázka \ref{obr04:2} sme ukázali, že sila testu konverguje k $1$ 
+pri rastúcom rozsahu náhodných výberov. 
+Teda korekcie mnohonásobného testovania nemajú vplyv na konzistenciu testov. 
+
+

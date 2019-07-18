@@ -1,0 +1,248 @@
+\chapter{Korekcie}
+
+V~predchádzajúcej kapitole sme opísali problém, ktorý nastáva pri~mnohonásobnom testovaní. 
+Problém s~hladinou významnosti sa dá vyriešiť použitím rôznych korekcií, 
+ktoré korigujú celkovú hladinu významnosti jednotlivých testov.  
+
+Nech $p_1, \dots, p_K$ sú postupne p-hodnoty testov nulových hypotéz $H_1, \dots, H_K$. 
+P-hodnoty zoradíme podľa veľkosti a~následne označíme v~poradí
+$$ p_{(1)} \leq p_{(2)} \leq \dots \leq p_{(K)}. $$ 
+Nulové hypotézy patriace k~zoradeným p-hodnotám označíme 
+$$ H_{(1)}, H_{(2)}, \dots, H_{(K)}. $$ 
+Tento zápis budeme potrebovať na~definovanie niektorých korekcií. 
+
+Korekcie, ktoré upravujú hladinu testov delíme na~dve~skupiny: 
+\begin{itemize}
+  \item simultánne zamietajúce, hypotézy sa zamietajú nezávisle na~sebe, 
+  \item postupne zamietajúce, hypotézy zamietame pomocou zoradených p-hodnôt. 
+\end{itemize}
+
+Korekcie rozlišujeme taktiež podľa toho, ktorú chybu kontrolujú. 
+Väčšina korekcií kontroluje silnejšiu verziu chyby ${\rm FWER}$, ktorá zároveň kontroluje aj~chybu ${\rm FDR}$, 
+ako sme uviedli v~predchádzajúcej kapitole.  
+Existujú však aj korekcie kontrolujúce len chybu ${\rm FDR}$, 
+teda nie sú až~také striktné. 
+
+Väčšina korekcií upravujúcich hladinu testu je založená na~Booleovej nerovnosti, 
+ktorú uvedieme aj~s~dôkazom. 
+
+\begin{tvrd}\label{tvrd02}
+  Nech $B_1, \dots, B_n$ sú náhodné javy, $n \in \N$. 
+  Potom platí 
+  $$ P \left( \bigcup_{i=1}^{n} B_i \right) \leq \sum_{i=1}^{n} P \left( B_i \right). $$
+\end{tvrd}    
+\begin{dokaz}
+  Nerovnosť dokážeme indukciou. 
+  Pre $n = 1$ nerovnosť platí. 
+  Budeme predpokladať, že nerovnosť platí pre~$n$, teda
+  $$ P \left( \bigcup_{i=1}^{n} B_i \right) \leq \sum_{i=1}^{n} P \left( B_i \right). $$ 
+  Dokážeme, že nerovnosť platí aj~pre~$n+1$, 
+  použijeme k~tomu rovnosť
+  $$ P \left( \bigcup_{i=1}^{n+1} B_i \right) 
+    = P \left( \bigcup_{i=1}^{n} B_i \right) + P ( B_{n+1} ) - P \left( \bigcup_{i=1}^{n} B_i \cap B_{n+1} \right). $$
+  Keďže $$ P \left( \bigcup_{i=1}^{n} B_i \cap B_{n+1} \right) \geq 0, $$
+  platí 
+  $$ P \left( \bigcup_{i=1}^{n+1} B_i \right) 
+    \leq P \left( \bigcup_{i=1}^{n} B_i \right) + P ( B_{n+1} ) 
+    \leq \sum_{i=1}^{n} P \left( B_i \right) + P ( B_{n+1} ) = \sum_{i=1}^{n+1} P \left( B_i \right). $$ 
+  Druhá nerovnosť vyplýva z~indukčného predpokladu. 
+\end{dokaz}
+
+\section{Bonferroni}
+
+Najznámejšou korekciou pri~úpravách mnohonásobného testovania je Bonferroniho korekcia. 
+Je založená na~Booleovej nerovnosti, ktorú sme ukázali na~začiatku kapitoly. 
+
+Podľa Tvrdenia \ref{tvrd01} zamietame nulovú hypotézu práve vtedy, keď je p-hodnota menšia alebo rovná ako~hladina testu. 
+Toto tvrdenie použijeme aj~pri~odvodení tejto korekcie. 
+Nech $p_1, \dots, p_K$ sú postupne p-hodnoty hypotéz $H_1, \dots, H_K$. 
+Bonferroniho korekcia zamieta nulovú hypotézu práve vtedy, keď $p_i \leq \frac{\alpha}{K}$ 
+pre~každé $i \in \{1, \dots, K\}$. 
+Chceme, aby veľkosť ${\rm FWER}$ bola menšia alebo rovná ako hladina testu $\alpha$, ktorú určíme na~začiatku. 
+Nech $\mathcal{H'}_0$ je množina platných hypotéz, ich počet je~$K'$. 
+Nech $I$ je~indexová množina platných hypotéz, teda $I~=~\{ i~\in~\{1, \dots, K\}; H_i ~\in~{\mathcal{H}}'_0 \}$. 
+Potom platí 
+\begin{center}
+  $$ {\rm FWER} =  P_{\mathcal{H}'_0} \left( \exists H_i \in {\mathcal{H}}'_0: \left[ \mathcal{S}^{(i)} \in \mathcal{C}^{(i)} \right] \right) 
+  = P_{\mathcal{H'}_0} \left( \bigcup_{i \in I} \left[ \mathcal{S}^{(i)} \in \mathcal{C}^{(i)} \right] \right) $$
+  $$ \leq \sum_{i \in I} P_{H^i} \left( \mathcal{S}^{(i)} \in \mathcal{C}^{(i)} \right) 
+  = K' \alpha_0 \leq K \alpha_0 = K \frac{\alpha}{K}  = \alpha, $$
+\end{center}  
+kde $\alpha_0 = \frac{\alpha}{K}$ je hladina jednotlivých testov. 
+
+Už~pri~testovaní $10$ hypotéz by sme museli použiť na~jednotlivé testy hladinu $\alpha_0 = 0.005$. 
+To~je~veľmi nízka hladina testu a~niektoré neplatné hypotézy by nemuseli byť zamietnuté, 
+teda sila testu je taktiež nižšia. 
+Z odvodenia korekcie vidíme, že kontroluje chybu ${\rm FWER}$ v~silnejšom zmysle. 
+
+\section{Šidák}
+
+Šidákova korekcia kontroluje taktiež chybu ${\rm FWER}$ v~silnejšom zmysle. 
+Patrí medzi korekcie, ktoré testujú hypotézy simultánne. 
+Jej~odvodenie vyplýva z~alternatívneho zápisu ${\rm FWER}$, 
+ktorý sme uviedli pred~Definíciou~\ref{def5}, 
+$$ {\rm FWER} = 1 - ( 1 - \alpha_0)^K, $$ 
+kde~$K$ je počet všetkých hypotéz a~$\alpha_0$ hladina jednotlivých testov. 
+Keď rovnosť prepíšeme iným spôsobom, dostaneme
+$$ \alpha_0 = 1 - ( 1 - {\rm FWER} )^{\frac{1}{K}}. $$ 
+Ak~chceme, aby ${\rm FWER}$ bola menšia alebo rovná ako $\alpha$, zvolíme 
+$$ \alpha_0 = 1 - ( 1 - \alpha )^{\frac{1}{K}}. $$
+Podrobné odvodenie korekcie a~jej~dôkaz nájdeme v článku \cite{Sidak67}. 
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c|r@{.}lr@{.}lr@{.}lr@{.}lr@{.}lr@{.}l}
+     & \multicolumn{2}{c}{{\bf BONF}} & \multicolumn{2}{c}{{\bf ŠIDÁK}} 
+     & \multicolumn{2}{c}{{\bf BONF}} & \multicolumn{2}{c}{{\bf ŠIDÁK}} 
+     & \multicolumn{2}{c}{{\bf BONF}} & \multicolumn{2}{c}{{\bf ŠIDÁK}} \\ 
+     {\bf $\alpha$} & \multicolumn{4}{c}{{\bf $0.01$}} & \multicolumn{4}{c}{{\bf $0.05$}} & \multicolumn{4}{c}{{\bf $0.1$}} \\ \hline
+    {\bf 1} & 0&0100 & 0&0100 & 0&0500 & 0&0500 & 0&1000 & 0&1000 \\
+    {\bf 2} & 0&0050 & 0&0050 & 0&0250 & 0&0253 & 0&0500 & 0&0513 \\
+    {\bf 3} & 0&0033 & 0&0033 & 0&0167 & 0&0169 & 0&0333 & 0&0345 \\
+    {\bf 4} & 0&0025 & 0&0025 & 0&0125 & 0&0127 & 0&0250 & 0&0260 \\
+    {\bf 5} & 0&0020 & 0&0020 & 0&0100 & 0&0102 & 0&0200 & 0&0209 \\
+    {\bf 6} & 0&0017 & 0&0017 & 0&0083 & 0&0085 & 0&0167 & 0&0174 \\
+    {\bf 7} & 0&0014 & 0&0014 & 0&0071 & 0&0073 & 0&0143 & 0&0149 \\ 
+    {\bf 8} & 0&0013 & 0&0013 & 0&0063 & 0&0064 & 0&0125 & 0&0131 \\ 
+    {\bf 9} & 0&0011 & 0&0011 & 0&0056 & 0&0057 & 0&0111 & 0&0116 \\ 
+    {\bf 10} & 0&0010 & 0&0010 & 0&0050 & 0&0051 & 0&0100 & 0&0105 \\ 
+  \end{tabular}
+  \caption{Veľkosti $\alpha_0$ pri~použití Bonferroniho a~Šidákovej korekcie 
+  pre~rôzne zvolené hladiny $\alpha$}
+  \captionsetup{justification=centering}
+  \label{tab03:1}
+\end{table}
+
+Z~Tabuľky~\ref{tab03:1} vidíme, že~Šidákova korekcia má v~porovnaní s~Bonferroniho korekciou 
+väčšie hladiny jednotlivých testov, to~znamená, že aj~sila testu bude vyššia. 
+Pri~vyšších počtoch hypotéz sú upravené hladiny týchto dvoch korekcií podobné. 
+Pre~$\alpha = 0.01$ nie je vzhľadom k~zaokrúhleniu vidieť rozdiel medzi korekciami. 
+
+\section{Holm}
+
+Holmova korekcia je opäť založená na~Booleovej nerovnosti. 
+Patrí medzi korekcie s~postupným zamietaním hypotéz. 
+
+Na~definovanie korekcie budeme potrebovať zoradené p-hodnoty $p_{(i)}$ a k~nim príslušné hypotézy $H_{(i)}$, 
+ako sme zaviedli na~začiatku kapitoly. 
+Odvodenie korekcie nájdeme v článku~\cite{Holm79}. 
+\newline ${\bf Procedúra:}$ 
+\begin{itemize}
+  \item Ak $p_{(1)} \leq \frac{\alpha}{K}$, zamietame hypotézu  $H_{(1)}$ a~pokračujeme ďalším krokom. 
+  V~opačnom prípade nezamietame hypotézy $H_{(1)}, H_{(2)}, \dots, H_{(K)}$. 
+  Zo~zoradených p-hodnôt vyplýva  $\frac{\alpha}{K} < p_{(1)} \leq p_{(2)} \leq \dots \leq p_{(K)}$, 
+  podľa Bonferroniho korekcie nezamietame žiadnu hypotézu. 
+  \item Ak $p_{(i)} \leq \frac{\alpha}{K-i+1}$, zamietame hypotézu $H_{(i)}$ a~pokračujeme ďalším krokom. 
+  V~opačnom prípade nezamietame hypotézy $H_{(i)}, H_{(i+1)}, \dots, H_{(K)}$. 
+  \item Ak $p_{(K)} \leq \alpha$, zamietame $H_{(K)}$ a~procedúra končí. 
+  V~opačnom prípade nezamietame hypotézu $H_{(K)}$. 
+\end{itemize}  
+
+\begin{tvrd}\label{tvrd03}
+  Holmova korekcia kontroluje, aby chyba ${\rm FWER}$ bola menšia alebo rovná ako $\alpha$. 
+\end{tvrd} 
+\begin{dokaz}
+  Nech $\mathcal{H}'_0 \subseteq \mathcal{H}$ je~množina pravdivých hypotéz, 
+  nech~$I$ je jej~množina indexov, $K'$~je počet prvkov množiny~$I$. 
+  Z~Booleovej nerovnosti vyplýva nasledujúca nerovnosť  
+  \begin{center}
+  $$ {\rm FWER} = P_{\mathcal{H}'_0} \left( \exists i \in I : p_i \leq \frac{\alpha}{K'} \right) 
+    = P_{\mathcal{H}'_0} \left( \bigcup_{i \in I} \left[ p_i \leq \frac{\alpha}{K'} \right] \right)  $$
+  $$ \leq \sum_{i \in I}  P_{H_i} \left( p_i \leq \frac{\alpha}{K'} \right) 
+    = K' \frac{\alpha}{K'} = \alpha. $$
+  \end{center}
+  Pokiaľ platí 
+  $$ \forall i \in I : p_i > \frac{\alpha}{K'}, $$ 
+  existuje $K'$ hypotéz, ktoré sú väčšie ako $\frac{\alpha}{K'}$ a~určite platí
+  $$ p_{(K)} > \dots > p_{(K-K'+1)} > \frac{\alpha}{K'}. $$ 
+  Procedúra sa zastaví najneskôr v~kroku $K-K'+1$. 
+  To~implikuje, že množina všetkých hypotéz s~p-hodnotou menšou ako $\frac{\alpha}{K'}$ 
+  obsahuje aj~množinu platných hypotéz. 
+\end{dokaz}  
+
+Z~dôkazu Tvrdenia~\ref{tvrd03} vyplýva, že Holmova korekcia kontroluje chybu ${\rm FWER}$ v~silnejšom zmysle. 
+
+\section{Simes}
+
+Na~definíciu Simesovej korekcie budeme opäť používať zápis zoradených p-hodnôt a~k~nim príslušných hypotéz. 
+Túto korekciu zaraďujeme medzi simultánne zamietajúce. 
+\newline ${\bf Procedúra:}$
+\begin{itemize}
+  \item Ak $p_{(i)} \leq \frac{i\alpha}{K}$ pre~každé $i \in \{1, \dots, K\}$, zamietame ${\mathcal{H}}$, 
+  kde ${\mathcal{H}}$ označuje množinu všetkých nulových hypotéz. 
+\end{itemize}  
+
+\begin{tvrd}\label{tvrd04}
+  Nech $p_{(1)}, \dots, p_{(K)}$ sú zoradené štatistiky z~$K$~nezávislých náhodných veličín 
+  z~rovnomerného rozdelenia na~$(0,1)$ a~nech $\alpha \in (0,1)$. 
+  Potom platí
+  $$ P \left( p_{(i)} > \frac{i\alpha}{K} ;~i \in \{1, \dots, K\} \right) = 1 - \alpha. $$
+\end{tvrd}  
+
+Dôkaz Tvrdenia~\ref{tvrd04} sa~nachádza v~článku \cite{Simes86}. 
+Táto korekcia kontroluje ${\rm FWER}$ len~v~slabšom zmysle, 
+teda zaručuje ${\rm FWER} \leq \alpha$ iba~v~prípade, že platia všetky nulové hypotézy. 
+
+\section{Hochberg}
+
+V~článku~\cite{Hochberg88} je porovnaná Holmova a~Simesova korekcia. 
+Keďže Simesova korekcia kontroluje chybu ${\rm FWER}$ len v~slabšom zmysle, 
+Hochberg vytvoril korekciu odvodenú z~týchto dvoch korekcií, 
+ktorá bude kontrolovať silnú verziu chyby ${\rm FWER}$. 
+Táto korekcia má~podobný zápis ako Holmova korekcia, 
+avšak procedúra začína testovaním hypotézy s~najväčšou p-hodnotou. 
+\newline ${\bf Procedúra:}$
+\begin{itemize}
+  \item Ak $p_{(K)} \leq \alpha$, zamietame hypotézy $H_{(K)}, H_{(K-1)}, \dots, H_{(1)}$. 
+  V~opačnom prípade nezamietame hypotézu $H_{(K)}$ a~pokračujeme ďalším krokom. 
+  \item Ak $p_{(i)} \leq \frac{\alpha}{K-i+1}$, zamietame hypotézy $H_{(K-i+1)}, H_{(K-i)}, \dots, H_{(1)}$,
+  V~opačnom prípade nezamietame hypotézu $H_{(K-i+1)}$ a~pokračujeme ďalším krokom. 
+  \item Ak $p_{(1)} \leq \frac{\alpha}{K}$, zamietame $H_{(1)}$. 
+  V~opačnom prípade nezamietame hypotézu~$H_{(1)}$. 
+\end{itemize}  
+
+\begin{tvrd}\label{tvrd05}
+  Nech $j \in \{1, \dots, K\}$. Ak pre~každé $i \in \{1, \dots, j\}$ platí $p_{(i)} \leq \frac{\alpha}{K-i+1}$, 
+  tak~Simesova korekcia zamieta všetky $H_{(i)}$ pre~$i \leq j$. 
+\end{tvrd}  
+\begin{dokaz}
+  Podľa predpokladu pre~každé $i \in \{1, \dots, j\}$ platí $p_{(i)} \leq \frac{\alpha}{K-i+1}$. 
+  Označme $\mathcal{H}' \subseteq \mathcal{H}$ množinu hypotéz, ktoré spĺňajú túto nerovnosť, 
+  $\mathcal{H}' = \{ H_{(1)}, \dots, H_{(j)} \}$. 
+  Pre~každé $i \leq j$ platí nerovnosť $\frac{\alpha}{K-i+1} \leq \frac{i \alpha}{j}$, potom 
+  $$ p_{(i)} \leq \frac{\alpha}{K-i+1} \leq \frac{i \alpha}{j}. $$ 
+  Je~splnená podmienka Simesovej korekcie a zamietame hypotézy $H_{(1)}, \dots, H_{(j)}$. 
+\end{dokaz}  
+
+\section{Benjamini-Hochberg}
+
+Podľa~článku~\cite{Benjamini&Hochberg95} nie je vždy potrebné kontrolovať chybu ${\rm FWER}$, 
+pretože sa pozeráme len na~to, či~nastala chyba alebo nie. 
+Ich~korekcia bude kontrolovať chybu ${\rm FDR}$, 
+konkrétne strednú hodnotu podielu neplatných zamietnutých hypotéz k~všetkým zamietnutým hypotézam. 
+
+Táto korekcia nie je výhodnejšia, pokiaľ sú všetky nulové hypotézy pravdivé, 
+pretože v~tomto prípade sa~chyby ${\rm FWER}$ a~${\rm FDR}$ rovnajú. 
+
+Budeme pracovať so~zoradenými p-hodnotami ako pri~predchádzajúcich korekciách. 
+\newline${\bf Procedúra:}$
+\begin{itemize}
+  \item Nech $j$ je najväčšie~$i$, pre~ktoré platí $p_{(i)} \leq \frac{i\alpha}{K}$.  
+  Potom zamietame všetky $H_(i)$ pre~$i \in \{1, \dots, j\}$. 
+\end{itemize}  
+
+\begin{tvrd}\label{tvrd06}
+  Pre nezávislé testové štatistiky a pre~akékoľvek zostavenie nepravdivých nulových hypotéz
+  kontroluje Benjamini-Hochbergova korekcia chybu ${\rm FDR}$ na~hladine $\alpha$. 
+\end{tvrd} 
+\begin{dokaz}
+  Máme $K$~nezávislých p-hodnôt, ktoré patria k~nulovým hypotézam. 
+  Nech $K_0$~je počet p-hodnôt príslušných k~pravdivým hypotézam a~$K_1 = K - K_0$~počet p-hodnôt príslušných k~nepravdivým hypotézam. 
+  P-hodnoty príslušné k~platným hypotézam označíme $p^{(1)}, \dots, p^{(K_0)}$ a 
+  p-hodnoty príslušné k~neplatným hypotézam $p^{(K_0+1)}, \dots, p^{(K)}$. 
+  Použijeme značenie ako v~Tabuľke~\ref{tab02:1}, pripomeňme, že ${\rm FDR} = E \left( \frac{D}{Z} \right)$. 
+  Benjamini-Hochbergerova korekcia spĺňa 
+  $$ E \left( \frac{D}{Z} ~ \bigg| ~ p_{K_0+1} = p^{(1)}, \dots, p_{K} = p^{(K_1)} \right) \leq \frac{K_0}{K} \alpha \leq \alpha. $$
+  Tvrdenie vyplýva z~nerovnosti, jej~dôkaz nájdeme v~článku~\cite{Benjamini&Hochberg95}. 
+\end{dokaz}  
+

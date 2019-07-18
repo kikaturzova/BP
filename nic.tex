@@ -1,0 +1,140 @@
+Mnohonásobné testovanie sa používa výhradne na kvantitatívne dáta. 
+Na začiatku predpokladajme, že máme $k$ nezávislých náhodných výberov, kde $k \geq 2$. 
+Pomocou mnohonásobného testovania chceme zistiť, či sa rovnajú stredné hodnoty všetkých náhodných výberov 
+a taktiež ktoré náhodné výbery majú odlišnú strednú hodnotu. 
+
+\begin{center} 
+$ {\bf X}_1 = (X_{11}, X_{12}, \dots, X_{1n_1}) $ s rozdelením $F_1$ \\
+$ {\bf X}_2 = (X_{21}, X_{22}, \dots, X_{1n_2}) $ s rozdelením $F_2$ \\
+$\vdots$ \\
+$ {\bf X}_k = (X_{k1}, X_{k2}, \dots, X_{kn_k}) $ s rozdelením $F_k$ \\
+\end{center}
+
+Náhodný výber ${\bf X}_i$ je vytvorený z $n_i$ nezávislých rovnako rozdelených náhodných veličín, 
+ktoré pochádzajú z rozdelenia $F_i$, kde $i=1, \dots, k$.
+Označme $N = \sum_{i=1}^{k} n_i$ počet všetkých náhodných veličín. 
+
+Ak by bolo $k=2$, vieme otestovať hypotézy pomocou dvojvýberových testov. 
+V tomto prípade teda nie je potrebné mnohonásobné porovnávanie. 
+
+Ak by sme len chceli zistiť, či sú stredné hodnoty všetkých náhodných výberov rovnaké, 
+je možné použiť jednoduché triedenie, ktoré sa nazýva taktiež analýza roptylov. 
+V tomto prípade však musíme predpokladať, že náhodné výbery pochádzajú z normálneho rozdelenia 
+so zhodnými rozptylmi. 
+Budeme teda uvažovať model
+$$ \mathcal{F} = \{ F_i = N(\mu_i, \sigma^2),~\mu_i \in \R,~\sigma^2 \in \R,~\sigma^2>0,~i \in \{1, \dots, k\} \}. $$
+
+Keďže nulová hypotéza je rovnosť všetkých stredných hodnôt, 
+na jej zamietnutie stačí nájsť dva rôzne náhodné výbery s rozdielnou strednou hodnotou. 
+Hypotézy budú vyzerať nasledovne
+$$ H_0: \mu_1 = \mu_2 = \dots = \mu_k, $$
+$$ H_1: \exists~i, j \in \{1, \dots, k\},~i \neq j : \mu_i \neq \mu_j. $$ 
+
+Použijeme testovú štatistiku, ktorá bude mať tvar 
+$$ F_A = \frac{\frac{SS_A}{k-1}}{\frac{SS_e}{N-k}}, $$
+$$ SS_A = \sum_{i=1}^{k} n_i ( \overline{Y}_{i+} - \overline{Y}_{++} )^2,~
+SS_e = \sum_{i=1}^{k} \sum_{j=1}^{n_i} ( Y_{ij} - \overline{Y}_{i+} )^2. $$
+$Y_{ij}$ sú náhodné veličiny z náhodného výberu, 
+$\overline{Y}_{i+}$ sú priemery jednotlivých náhodných výberov
+a $\overline{Y}_{++}$ je celkový priemer všetkých náhodných veličín z náhodných výberov. 
+$SS_A$ sa nazýva súčet štvorcov skupín a $SS_e$ reziduálny súčet štvorcov. 
+
+Odvodenie testovej štatistiky je pomerne zložité a nie je to cieľom tejto práce, 
+preto ho nebudeme opisovať podrobnejšie. Je možné ho vidieť v \cite{Andel07}. 
+
+Spôsobom, ktorý sme opísali vyššie je môžné zistiť rovnosť stredných hodnôt všetkých náhodných výberov, 
+avšak žiadnu ďalšiu informáciu nezískame. 
+Ak by sme chceli zistiť konkrétnejšie informácie o dátach, napríklad zaradiť do skupín náhodné výbery s rovnakými strednými hodnotami, 
+prípadne zistiť ktorý náhodný výber má odlišnú strednú hodnotu od ostatných, musíme postupovať inak. 
+Jednou z možností je otestovať stredné hodnoty každých dvoch náhodných výberov. 
+Z $k$ náhodných výberov vytvoríme $\frac{k(k-1)}{2}$ dvojíc, toto číslo označíme $M$. Teda budeme mať $M$ hypotéz, ktoré budeme testovať. 
+
+Nulové a alternatívne hypotézy budeme označovať postupne $H^{(i)}_0$ a $H^{(i)}_1$, kde $i \in \{1, \dots, M\}$. 
+Testové štatistiku budeme značiť $S^{(i)}$, kritický obor $C^{(i)}$ a štatistický test zložený z testovej štatistiky  $S^{(i)}$ 
+a kritického oboru $C^{(i)}$ budeme značiť $T^{(i)}$. 
+Testovanie hypotéz prebehne tak ako sme opisovali v prvej kapitole, 
+hypotézu $H^{(i)}_0$ budeme zamietať v prospech $H^{(i)}_1$, ak $S^{(i)} \in C^{(i)}$ a naopak, kde $i \in \{1, \dots, M\}$. 
+
+
+
+
+
+
+V tejto podkapitole pomocou obrázkov ukážeme, že $\alpha_K$ je naozaj väčšia ako $\alpha$. 
+V našom prípade zvolíme $\alpha = 0,05$. 
+
+Nech ${\bf X} = (X_1, X_2, \dots, X_n)^T$ je náhodný výber s rozdelením $N(\mu, \sigma^2)$, 
+teda budeme pracovať s modelom $\mathcal{F} = \{ N(\mu, \sigma^2),~\mu \in \R,~\sigma^2>0 \}$. 
+Najskôr budeme testovať hypotézu $H_0$ proti alternatíve $H_1$, ktoré budú tvaru 
+$$ H_0: \mu = 0,~H_1: \mu \neq 0. $$
+Jednovýberovým testom budeme testovať vygenerované dáta z normovaného normálneho rozdelenia. 
+Tento postup budeme opakovať niekoľko krát po sebe. 
+Potrebujeme zistiť počet zamietnutých platných hypotéz. 
+Keďže dáta sme vygenerovali tak, aby ich stredná hodnota bola rovná $0$, 
+všetky hypotézy sú platné a podiel zamietnutých hypotéz ku všetkým opakovaniam bude rovný hladine testu. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{C:/Users/KIKA/Desktop/BP/R/2hladina1.png}
+  \caption{Hladina jednovýberového testu po $1000$ opakovaniach pre rôzne počty pozorovaní}
+  \label{obr02:01}
+\end{figure}
+
+Na obrázku \ref{obr02:01} môžeme vidieť hladinu jednovýberového testu, ktorým sa testuje stredná hodnota dát s rôznym počtom pozorovaní, 
+postupne $10$, $100$, $1000$, $10000$, $100000$. 
+Jednovýberový test bol opakovaný $1000$-krát, pričom dáta boli vždy nanovo vygenerované. 
+Na obrázku je vidieť, že hladina testu pri rôznych počtoch pozorovaní sa pohybuje blízko zvolenej hladiny testu. 
+
+Teraz budeme postupovať podobne, ale budeme testovať 3 hypotézy. 
+Predpokladajme, že máme 3 náhodné výbery. 
+Pre jednoduchosť budeme predpokladať, že náhodné výbery majú rovnaký rozptyl. 
+$$ {\bf X}_1 = (X_{11}, X_{12}, \dots, X_{1n}) \sim N(\mu_1, \sigma^2) $$ 
+$$ {\bf X}_2 = (X_{21}, X_{22}, \dots, X_{2n}) \sim N(\mu_2, \sigma^2) $$
+$$ {\bf X}_3 = (X_{31}, X_{32}, \dots, X_{3n}) \sim N(\mu_3, \sigma^2) $$
+Tieto dáta budú opäť vygenerované z normovaného normálneho rozdelenia. 
+Tentokrát budeme testovať, či sa rovnajú stredné hodnoty všetkých náhodných výberov
+a použijeme k tomu mnohonásoné testovanie. 
+Budeme mať 3 hypotézy. 
+$$ H_0: \mu_1 = \mu_2,~H_1: \mu_1 \neq \mu_2 $$ 
+$$ H_0: \mu_2 = \mu_3,~H_1: \mu_2 \neq \mu_3 $$ 
+$$ H_0: \mu_1 = \mu_3,~H_1: \mu_1 \neq \mu_3 $$ 
+
+Každú nulovú hypotézu otestujeme použitím jednovýberového testu. 
+Mnohonásobné testovanie zopakujeme viackrát po sebe. 
+Dáta boli vygenerované so strednou hodnotou rovnou $0$, 
+teda všetky náhodné výbery majú rovnakú strednú hodnotu a hypotézy sú platné. 
+Stačí spočítať všetky zamietnuté hypotézy a ich podiel k počtu opakovaní testovania je hladina testu. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{C:/Users/KIKA/Desktop/BP/R/2hladina2.png}
+  \caption{Hladina mnohonásobného testovania po $1000$ opakovaniach pre rôzne počty pozorovaní}
+  \label{obr02:02}
+\end{figure}
+
+Na obrázku \ref{obr02:02} vidíme hladinu mnohonásobného testovania, ktorým sa testuje rovnosť stredných hodnôt všetkých náhodných výberov. 
+Opäť boli použité rôzne počty pozorovaní, postupne $10$, $100$, $1000$, $10000$, $100000$. 
+Mnohonásobné testovanie bolo opakované $1000$-krát, dáta boli vždy vygenerované nanovo. 
+Na obrázku vidíme, že skutočná hladina testu je vzdialená od $\alpha$, ktorú sme si zvolili predtým. 
+Jej veľkosť je skoro trojnásobkom zvolenej hladiny testu. 
+
+Hladina testu je v tomto prípade výrazne vyššia ako by sme chceli, 
+preto nie je možné používať mnohonásobné testovanie v takejto forme. 
+
+
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|c|r@{.}l|r@{.}l|r@{.}l|r@{.}l|r@{.}l|r@{.}l|}
+    \hline
+     & \multicolumn{2}{c}{BONF} & \multicolumn{2}{c}{ŠIDÁK} & \multicolumn{2}{c}{HOLM} 
+     & \multicolumn{2}{c}{SIMES} & \multicolumn{2}{c}{HOCH} & \multicolumn{2}{c}{BH} \\ \hline
+    1 & 0&23 & 0&15 & 5 & 6\\ \hline
+    2 & 0&2 & 0&155 & 5 & 6\\ \hline
+    3 & \\ \hline
+  \end{tabular}
+  \caption{Počet zamietnutých hypotéz v každej metóde pri testovaní $3$ hypotéz 
+  pri počte opakovaní $10000$}
+  \label{tab04:}
+\end{table}
